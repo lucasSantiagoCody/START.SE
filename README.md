@@ -1,9 +1,10 @@
 # Start.Se
+
 <img src='https://github.com/user-attachments/assets/d9365599-f7db-4070-a4b3-574910f9bce1' width='50'>
 
 
 
-<h4>A project proposed by Pythonando</h4>
+<h4>Project proposed by Pythonando</h4>
 
 
 Start.Se aims to connect people who have StartApps and are looking for external investments  people who want to invest in other companies.
