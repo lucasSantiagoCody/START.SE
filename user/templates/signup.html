@@ -24,6 +24,7 @@
                 <h1 class="text-logo">START.SE</h1>
                 <h1>Cadastre-se</h1>
                 <form action="{% url 'signup_url' %}" method="POST">
+                    {% csrf_token %}
                     <label>Username</label>
                     <input type="text" class="form-control input-pers" name="username" placeholder="Digite seu nome">
                     <br>
@@ -35,8 +36,7 @@
                         <div class="input-group">
                         <input type="password" class="form-control input-pers" name="password" placeholder="Digite sua senha">
                         
-                        <input type="password" class="form-control input-pers" name="confirmation_p
-                        assword" placeholder="Confirmar senha">
+                        <input type="password" class="form-control input-pers" name="confirmation_password" placeholder="Confirmar senha">
                         </div>
                     </div>
                     <input type="submit" class="btn btn-indigo mb-2" value="Cadastrar">
