@@ -14,9 +14,18 @@
         </div>
         <div class="col-md-10 d-flex justify-content-center bg-color-dark form-auth">
             <div class="container-form">
+                {% if messages %}
+                    {% for message in messages %}
+                        <section class="alert {{message.tags}}">
+                            {{message}}
+                        </section>
+                    {% endfor %}
+                {% endif % }
                 <h1 class="text-logo">START.SE</h1>
                 <h1>Cadastre-se</h1>
-                <br>
+                
+                
+                    
                 <form action="#" >
                     <label>Username</label>
                     <input type="text" class="form-control input-pers" name="username" placeholder="Digite seu nome">
@@ -35,8 +44,6 @@
                     </div>
                     <input type="submit" class="btn btn-indigo mb-2" value="Cadastrar">
                     <span>Já possuo uma conta  - <a href="">Fazer login</a></span>
-                    
-                    
                 </form>
             </div>
 
