@@ -16,3 +16,9 @@ def password_validator(pswd):
     if pswd and len(pswd) >= 6:
         return True
     return False
+
+
+def username_validator(username):
+    if username and len(username) >= 3:
+        return True
+    return False
