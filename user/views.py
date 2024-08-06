@@ -1,10 +1,9 @@
 from .fields_validators import email_validator, password_validator, username_validator
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate,login as auth_login
 from django.contrib.messages import constants
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
-
 
 def signup_view(request):
     if request.method == 'GET':
@@ -51,3 +50,19 @@ def signup_view(request):
 
         return redirect(reverse('signup_url'))
       
+def login_view(request):
+    if request.method == 'GET':
+        return render(request, 'login.html')
+    elif request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        user = authenticate(username=email, password=password)
+
+        if user:
+            auth_login(request, user)
+            redirect(reverse('home_url'))
+        else:
+            messages.add_message(request, constants.ERROR, 'Credencias erradas')
+
+        return redirect(reverse('login_url'))
