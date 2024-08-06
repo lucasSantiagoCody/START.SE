@@ -10,3 +10,9 @@ def email_validator(email):
         if not check_email:
             return True
     return False
+
+
+def password_validator(pswd):
+    if pswd and len(pswd) >= 6:
+        return True
+    return False
