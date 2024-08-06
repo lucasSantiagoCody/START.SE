@@ -23,7 +23,7 @@
                 {% endif %}
                 <h1 class="text-logo">START.SE</h1>
                 <h1>Cadastre-se</h1>
-                <form action="{% url 'signup_url' %}">
+                <form action="{% url 'signup_url' %}" method="POST">
                     <label>Username</label>
                     <input type="text" class="form-control input-pers" name="username" placeholder="Digite seu nome">
                     <br>
