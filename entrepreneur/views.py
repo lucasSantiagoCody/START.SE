@@ -1,9 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages import constants
 from django.shortcuts import render, redirect
+from .models import Company, Document
 from django.contrib import messages
 from django.urls import reverse
-from .models import Company
 
 @login_required
 def register_company_view(request):
@@ -77,3 +77,39 @@ def company_view(request, company_id):
         context['company'] = Company.objects.filter(user=request.user).filter(id=company_id).first
         print(context)
         return render(request, 'company.html', context)
+
+
+@login_required
+def add_document_view(request, company_id):
+    
+    if company := Company.objects.filter(id=company_id).filter(user=request.user)[0]:
+
+        title = request.POST.get('title')
+        file = request.FILES.get('file')
+        extension = file.name.split('.')
+
+        
+        if file or extension[1] == 'pdf':
+            try:
+                document = Document(
+                    company=company,
+                    title=title,
+                    file=file
+                )
+                document.save()
+                messages.add_message(request, constants.SUCCESS, "Arquivo enviado com sucesso")
+            except Exception as e:
+                print(e)
+                messages.add_message(request, constants.ERROR, "Erro interno do sistema")
+        
+        else:
+            if extension[1] != 'pdf':
+                messages.add_message(request, constants.ERROR, "Envie apenas PDF's")
+            elif not file:
+                messages.add_message(request, constants.ERROR, "Envie um arquivo")
+
+        return redirect(reverse('company_url', kwargs={'company_id':company_id}))
+
+    else:
+        messages.add_message(request, constants.SUCCESS, "Acesso negado")
+        return redirect(reverse('login_url'))
