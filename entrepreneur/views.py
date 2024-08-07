@@ -59,5 +59,12 @@ def register_company_view(request):
 def companies_view(request):
     if request.method == 'GET':
         context = {}
-        context['companies' ]= Company.objects.filter(user=request.user)
+        company = Company.objects.filter(user=request.user)
+        company_name = request.GET.get('company_name')
+
+        if company_name:
+            company = company.filter(name__icontains=company_name)
+
+        context['companies' ] = company
+
         return render(request, 'companies.html', context)
