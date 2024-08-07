@@ -75,6 +75,7 @@ def company_view(request, company_id):
     if request.method == 'GET':
         context = {}
         context['company'] = Company.objects.filter(user=request.user).filter(id=company_id).first
+        context['documents'] = Document.objects.filter(company_id=company_id)
         print(context)
         return render(request, 'company.html', context)
 
@@ -113,3 +114,4 @@ def add_document_view(request, company_id):
     else:
         messages.add_message(request, constants.SUCCESS, "Acesso negado")
         return redirect(reverse('login_url'))
+    
