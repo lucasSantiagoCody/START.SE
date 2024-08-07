@@ -98,8 +98,7 @@ def add_document_view(request, company_id):
                 )
                 document.save()
                 messages.add_message(request, constants.SUCCESS, "Arquivo enviado com sucesso")
-            except Exception as e:
-                print(e)
+            except:
                 messages.add_message(request, constants.ERROR, "Erro interno do sistema")
         
         else:
