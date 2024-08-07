@@ -54,3 +54,10 @@ def register_company_view(request):
             return redirect(reverse('register_company_url'))
         
         
+
+@login_required
+def companies_view(request):
+    if request.method == 'GET':
+        context = {}
+        context['companies' ]= Company.objects.filter(user=request.user)
+        return render(request, 'companies.html', context)
