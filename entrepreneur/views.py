@@ -48,8 +48,7 @@ def register_company_view(request):
 
             messages.add_message(request, constants.SUCCESS, 'Empresa registrada com sucesso')
             return redirect(reverse('register_company_url'))
-        except Exception as e:
-            print(e)
+        except:
             messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
             return redirect(reverse('register_company_url'))
         
