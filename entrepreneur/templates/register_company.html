@@ -1,0 +1,92 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'user/css/user.css' %}">
+
+{% endblock 'head' %}
+
+
+{% block 'body' %}
+
+    <div class="container">
+        <br>
+        <br>
+        {% if messages %}
+            {% for message in messages %}
+                <section class="alert {{message.tags}}">
+                    {{message}}
+                </section>
+            {% endfor %}
+        {% endif %}
+        <div class="row mb-5">
+            <div class="col-md">
+                <form action="{% url 'register_company_url' %}" method="POST">
+                {% csrf_token %}
+                <label>Nome</label>
+                <input type="text" name="name" placeholder="Digite o nome da sua empresa ..." class="form-control">
+                <br>
+                <label>Cnpj</label>
+                <input type="text" name="cnpj" placeholder="Digite o seu CNPJ ..." class="form-control">
+                <br>
+                <label>Site</label>
+                <input type="text" name="site" placeholder="Digite o seu site ..." class="form-control">
+                <br>
+                <label>A quanto tempo a startup existe ?</label>
+                <select name="existence_time" class="form-select">
+                    {% for existence_time in existence_time_choices %}
+                        <option value="{{existence_time.0}}">{{existence_time.1}}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label>Descreva a sua empresa</label>
+                <textarea name="description" class="form-control"></textarea>
+                <br>
+                <label>Data final para captação</label>
+                <input type="date" name="captation_final_date" class="form-control">
+                <br>
+                <label>Qual a porcentagem (%) de equity oferecida em contrapartida ao valor investido?</label>
+                <input type="number" name="percentage_equity" class="form-control">
+                <input type="submit" class="btn btn-lg btn-indigo" value="cadastrar">
+
+            </div>
+            <div class="col-md">
+                <br>
+                <label>Qual o estágio da empresa ?</label>
+                <br>
+                <br>
+                <input type="checkbox" name="internship" value="I"><span>&nbsp&nbsp Tenho apenas uma ideia</span>
+                <br>
+                <input type="checkbox" name="internship" value="MVP"><span>&nbsp&nbsp Possuo um MVP</span>
+                <br>
+                <input type="checkbox" name="internship" value="MVPP"><span>&nbsp&nbsp Possuo um MVP com clientes pagantes</span>
+                <br>
+                <input type="checkbox" name="internship" value="E"><span>&nbsp&nbsp Empresa pronta para escalar  </span>
+                <br>
+                <br>
+                <label>Qual área sua startup está inseria ?</label>
+                <select name="sector" class="form-select">
+                    {% for sector in sector_choices %}
+                        <option value="{{sector.0}}">{{sector.1}}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label>Qual seu público alvo</label>
+                <select name="target_audience" class="form-select">
+                    <option value="BTC">BTC</option>
+                    <option value="B2B">B2B</option>
+                </select>
+                <br>
+                <label>Qual valor deseja captar ?</label>
+                <input type="number" name="value" class="form-control">
+                <br>
+                <label>Envie o pitch de apresentação</label>
+                <input type="file" name="pitch" class="form-control">
+                <br>
+                <label>Envie a logo da empresa</label>
+                <input type="file" name="logo" class="form-control">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock 'body' %}
