@@ -115,3 +115,18 @@ def add_document_view(request, company_id):
         messages.add_message(request, constants.SUCCESS, "Acesso negado")
         return redirect(reverse('login_url'))
     
+
+
+@login_required
+def delete_document_view(request, document_id):
+    if request.method == 'GET':
+        document = Document.filter(id=document_id)[0]
+
+        if document.company.user != request.user:
+            messages.add_message(request, constants.ERROR, "Esse documento não é seu")
+            return redirect(reverse('company_url', kwargs={'company_id', document.company.id}))
+
+        document.delete()
+
+        messages.add_message(request, constants.SUCCESS, "Documento excluído com sucesso")
+        return redirect(reverse('company_url', kwargs={'company_id', document.company.id}))
