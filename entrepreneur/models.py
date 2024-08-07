@@ -54,3 +54,11 @@ class Company(models.Model):
 
     def __str__(self):
         return f'{self.user.username} | {self.name}'
+    
+class Document(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.DO_NOTHING)
+    title = models.CharField(max_length=30)
+    file = models.FileField(upload_to="documents")
+
+    def __str__(self):
+        return self.title
