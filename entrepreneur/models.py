@@ -1,5 +1,7 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.safestring import mark_safe
+from django.db import models
+from datetime import date
 
 class Company(models.Model):
     existence_time_choices = (
@@ -38,6 +40,13 @@ class Company(models.Model):
     value = models.DecimalField(max_digits=9, decimal_places=2) # Valor total a ser vendido
     pitch = models.FileField(upload_to='pitches')
     logo = models.FileField(upload_to='logo')
+
+
+    @property
+    def status(self):
+        if date.today() > self.captation_final_date:
+            return mark_safe('<span class="badge bg-success">Captação finalizada</span>')
+        return mark_safe('<span class="badge bg-primary">Em captação</span>')
 
     def __str__(self):
         return f'{self.user.username} | {self.name}'
