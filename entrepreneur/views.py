@@ -68,3 +68,12 @@ def companies_view(request):
         context['companies' ] = company
 
         return render(request, 'companies.html', context)
+
+
+@login_required
+def company_view(request, company_id):
+    if request.method == 'GET':
+        context = {}
+        context['company'] = Company.objects.filter(user=request.user).filter(id=company_id).first
+        print(context)
+        return render(request, 'company.html', context)
