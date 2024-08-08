@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages import constants
-from .models import Company, Document
+from .models import Company, Document, Metric
 from django.contrib import messages
 from django.urls import reverse
 
@@ -129,4 +129,19 @@ def delete_document_view(request, document_id):
             messages.add_message(request, constants.ERROR, "Esse documento não é seu")
             return redirect(reverse('company_url', kwargs={'company_id', document.company.id}))
             
-            
+@login_required
+def add_metric_view(request, company_id):
+    if request.method == 'POST':
+        company = get_object_or_404(Company, id=company_id)
+        title = request.POST.get('title')
+        value = request.POST.get('value')
+
+        metric = Metric(
+            company=company,
+            title=title,
+            value=value
+        )
+
+        metric.save()
+        messages.add_message(request, constants.SUCCESS, 'Métrica adicionada com sucesso')
+        return redirect(reverse('company_url', kwargs={'company_id': company_id}))
