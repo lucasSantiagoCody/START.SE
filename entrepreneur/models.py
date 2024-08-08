@@ -65,7 +65,7 @@ class Document(models.Model):
 
 
 
-class Metrics(models.Model):
+class Metric(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     title = models.CharField(max_length=30)
     value = models.FloatField()
