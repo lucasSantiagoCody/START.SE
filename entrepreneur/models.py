@@ -62,3 +62,13 @@ class Document(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+class Metrics(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    title = models.CharField(max_length=30)
+    value = models.FloatField()
+
+    def __str__(self):
+        return self.title
