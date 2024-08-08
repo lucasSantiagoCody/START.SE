@@ -1,9 +1,11 @@
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages import constants
-from django.shortcuts import render, redirect
 from .models import Company, Document
 from django.contrib import messages
 from django.urls import reverse
+
+
 
 @login_required
 def register_company_view(request):
@@ -117,13 +119,14 @@ def add_document_view(request, company_id):
 @login_required
 def delete_document_view(request, document_id):
     if request.method == 'GET':
-        document = Document.objects.filter(id=document_id)[0]
+        document = get_object_or_404(Document, id=document_id)
 
-        if document.company.user != request.user:
+        if document.company.user == request.user:
+            document.delete()
+            messages.add_message(request, constants.SUCCESS, "Documento excluído com sucesso")
+            return redirect(reverse('company_url', kwargs={'company_id': document.company.id}))
+        else:
             messages.add_message(request, constants.ERROR, "Esse documento não é seu")
             return redirect(reverse('company_url', kwargs={'company_id', document.company.id}))
-    
-        document.delete()
-
-        messages.add_message(request, constants.SUCCESS, "Documento excluído com sucesso")
-        return redirect(reverse('company_url', kwargs={'company_id': document.company.id}))
+            
+            
