@@ -118,12 +118,12 @@
                             <form action="{% url 'add_metric_url' company.id %}" method="POST">
                                 {% csrf_token %}
                                 <label>Titulo</label>
-                                <input type="text" class="form-control" name="titulo" placeholder="Adicione um texto ...">
+                                <input type="text" class="form-control" name="title" placeholder="Adicione um texto ...">
                                 
                             </div>
                             <div class="col-md">
                                 <label>Valor</label>
-                                <input type="text" class="form-control" name="valor" placeholder="Adicione um valor ...">
+                                <input type="text" class="form-control" name="value" placeholder="Adicione um valor ...">
                             </div>
                             
                         </div>
