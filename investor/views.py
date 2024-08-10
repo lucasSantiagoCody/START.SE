@@ -79,7 +79,7 @@ def make_proposal_view(request, company_id):
         investment_proposal.save()
 
         messages.add_message(request, constants.SUCCESS, f'Proposta enviada com sucesso')
-        return redirect(f'/investidores/assinar_contrato/{investment_proposal.id}')
+        return redirect(reverse('sign_contract_url', kwargs={'investment_proposal_id': investment_proposal.id}))
     
     return redirect(reverse('company_details_url', kwargs={'company_id': company_id}))
     
