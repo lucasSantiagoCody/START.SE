@@ -77,7 +77,7 @@ def company_view(request, company_id):
         context = {}
         context['company'] = Company.objects.filter(user=request.user).filter(id=company_id).first
         context['documents'] = Document.objects.filter(company_id=company_id)
-        return render(request, 'company.html', context)
+        return render(request, 'company_details.html', context)
 
 
 @login_required
