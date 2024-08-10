@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
-from entrepreneur.models import Company
-from django.urls import reverse
+from django.shortcuts import render, get_object_or_404
+from entrepreneur.models import Company, Document
+
 
 
 def suggestion_view(request):
@@ -35,3 +35,12 @@ def suggestion_view(request):
         return render(request, 'suggestion.html', context)
 
         
+def company_details_view(request, company_id):
+    if request.method == 'GET':
+        context = {}
+        company = get_object_or_404(Company, id=company_id)
+        documents = Document.objects.filter(company=company)
+        context['company' ] = company
+        context['documents' ] = documents
+
+        return render(request, 'company_details.html', context)
