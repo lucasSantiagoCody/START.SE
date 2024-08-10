@@ -72,7 +72,7 @@ def companies_view(request):
 
 
 @login_required
-def company_view(request, company_id):
+def company_details_view(request, company_id):
     if request.method == 'GET':
         context = {}
         context['company'] = Company.objects.filter(user=request.user).filter(id=company_id).first
