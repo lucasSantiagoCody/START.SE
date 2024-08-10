@@ -4,8 +4,7 @@ from django.contrib.messages import constants
 from .models import InvestmentProposal
 from django.contrib import messages
 from django.urls import reverse
-
-
+from django.http import Http404
 
 def suggestion_view(request):
     if request.method == 'GET':
@@ -86,3 +85,28 @@ def make_proposal_view(request, company_id):
     
 
     
+
+
+def sign_contract_view(request, investment_proposal_id):
+    investment_proposal = InvestmentProposal.objects.get(id=investment_proposal_id)
+
+    if investment_proposal.status != "AS":
+        raise Http404()
+    
+    if request.method == "GET":
+        context = {}
+        context['investment_proposal_id'] = investment_proposal_id
+        return render(request, 'sign_contract.html', context)
+    
+    elif request.method == "POST":
+        selfie = request.FILES.get('selfie')
+        rg = request.FILES.get('rg')
+        
+
+        investment_proposal.selfie = selfie
+        investment_proposal.rg = rg
+        investment_proposal.status = 'PE'
+        investment_proposal.save()
+
+        messages.add_message(request, constants.SUCCESS, f'Contrato assinado com sucesso, sua proposta foi enviada a empresa.')
+        return redirect(reverse('company_details_url', kwargs={'company_id': investment_proposal.company.id}))
