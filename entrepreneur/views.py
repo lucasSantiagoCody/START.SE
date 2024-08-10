@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from investor.models import InvestmentProposal
 from django.contrib.messages import constants
 from .models import Company, Document, Metric
 from django.contrib import messages
 from django.urls import reverse
-
 
 
 @login_required
@@ -75,8 +75,13 @@ def companies_view(request):
 def company_details_view(request, company_id):
     if request.method == 'GET':
         context = {}
+        investments_proposal = InvestmentProposal.objects.filter(comapny_id=company_id)
+        sended_investments_proposal = investments_proposal.filter(status='PE')
+
         context['company'] = Company.objects.filter(user=request.user).filter(id=company_id).first
         context['documents'] = Document.objects.filter(company_id=company_id)
+        context['sended_investments_proposal'] = sended_investments_proposal
+
         return render(request, 'company_details.html', context)
 
 
