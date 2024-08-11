@@ -21,5 +21,9 @@ class InvestmentProposal(models.Model):
     selfie = models.FileField(upload_to="selfie", null=True, blank=True)
     rg = models.FileField(upload_to="rg", null=True, blank=True)
 
+    @property
+    def valuation(self):
+        return (100*float(self.value)) / float(self.percentage)
+
     def __str__(self):
         return str(self.value)
