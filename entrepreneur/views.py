@@ -82,6 +82,18 @@ def company_details_view(request, company_id):
         context['documents'] = Document.objects.filter(company_id=company_id)
         context['sended_investments_proposal'] = sended_investments_proposal
 
+        percentage_sold = 0
+        for investment_proposal in investments_proposal:
+            if investment_proposal.status == 'PA':
+                percentage_sold = percentage_sold + investment_proposal.percentage
+        
+        captured_total = sum(investments_proposal.filter(status='PA').values_list('value', flat=True))
+        current_valuation = (100 * float(captured_total)) / float(percentage_sold) if percentage_sold != 0 else 0
+        
+        context['captured_total'] = captured_total
+        context['percentage_sold'] = percentage_sold
+        context['current_valuation'] = current_valuation
+
         return render(request, 'company_details.html', context)
 
 
