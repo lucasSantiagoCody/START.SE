@@ -75,7 +75,7 @@ def companies_view(request):
 def company_details_view(request, company_id):
     if request.method == 'GET':
         context = {}
-        investments_proposal = InvestmentProposal.objects.filter(comapny_id=company_id)
+        investments_proposal = InvestmentProposal.objects.filter(company_id=company_id)
         sended_investments_proposal = investments_proposal.filter(status='PE')
 
         context['company'] = Company.objects.filter(user=request.user).filter(id=company_id).first
