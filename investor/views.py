@@ -43,8 +43,25 @@ def company_details_view(request, company_id):
         context = {}
         company = get_object_or_404(Company, id=company_id)
         documents = Document.objects.filter(company=company)
+        investments_proposal = InvestmentProposal.objects.filter(company_id=company_id)
+
+        percentage_sold = 0
+        for investments_proposal in investments_proposal:
+            percentage_sold = percentage_sold + investments_proposal.percentage
+
+        limiar = (80 * company.percentage_equity) / 100
+
+        realized = False
+        if percentage_sold >= limiar:
+            realized = True
+
+        available_percentage = company.percentage_equity - percentage_sold
+
         context['company' ] = company
         context['documents' ] = documents
+        context['percentage_sold' ] = percentage_sold
+        context['realized' ] = realized
+        context['available_percentage' ] = available_percentage
 
         return render(request, 'investor_company_details.html', context)
 
