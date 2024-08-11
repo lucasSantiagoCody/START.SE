@@ -46,7 +46,7 @@ def company_details_view(request, company_id):
         context['company' ] = company
         context['documents' ] = documents
 
-        return render(request, 'company_details.html', context)
+        return render(request, 'investor_company_details.html', context)
 
 def make_proposal_view(request, company_id):
     value = request.POST.get('value')
