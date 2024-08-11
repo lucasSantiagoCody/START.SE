@@ -158,9 +158,9 @@
                             </span>
                         </div>
                         <div class="col-md">
-                            <a href="#" class="btn btn-indigo-normal">Aceitar</a>
+                            <a href="{% url 'manage_proposal_url' invesment_proposal.id %}?action=aceitar" class="btn btn-indigo-normal">Aceitar</a>
                             <br>
-                            <a href="#" style="margin-top: 5px;" class="btn btn-danger">Negar</a>
+                            <a href="{% url 'manage_proposal_url' invesment_proposal.id %}?action=recusar" style="margin-top: 5px;" class="btn btn-danger">Negar</a>
                         </div>
                     </div>
                 </div>
