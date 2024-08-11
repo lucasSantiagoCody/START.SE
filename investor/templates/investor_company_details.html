@@ -29,7 +29,7 @@
                     </div>
                     <div class="col-md">
                         <h3>{{company.nome}}</h3>
-                        <!-- <span class="badge bg-primary">{{empresa.get_area_display}}</span> -->
+                        <!-- <span class="badge bg-primary">{{company.get_area_display}}</span> -->
                     </div>
                     
                 </div>
@@ -39,10 +39,14 @@
                     <div class="progress-bar bg-success"></div>
                 </div>
                 <br>
-               
+                    {% if realized %}
+
                     <span class="badge bg-success">V</span><span>&nbsp &nbsp A empresa já atingiu 80% do percentual captado, portanto seu investimento será concretizado.</span>
+                    {% else %}
+
+                     <span class="badge bg-warning">x</span><span>&nbsp &nbsp Seu investimento será concretizado caso a empresa atinja pelo meno 80% do valor esperado até a data final.</span>
+                    {% endif %}
                 
-                   <!--  <span class="badge bg-warning">x</span><span>&nbsp &nbsp Seu investimento será concretizado caso a empresa atinja pelo meno 80% do valor esperado até a data final.</span>-->
                 
                 <hr>
                 <p>{{company.description}}</p>
@@ -54,7 +58,7 @@
                     <h5>Percentual</h5>
                     <span class="sub-fonte">Total a venda: {{company.percentage_equity}}%</span>
                     <br>
-                    <span class="sub-fonte">Disponivel à compra: %</span>
+                    <span class="sub-fonte">Disponivel à compra: {{available_percentage}}</span>
                 </div>
                 <br>
                 <span class="badge bg-warning">{{company.target_audience}}</span>
