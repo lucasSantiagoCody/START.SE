@@ -150,3 +150,19 @@ def add_metric_view(request, company_id):
         metric.save()
         messages.add_message(request, constants.SUCCESS, 'Métrica adicionada com sucesso')
         return redirect(reverse('company_url', kwargs={'company_id': company_id}))
+
+
+def manage_proposal_view(request, investment_proposal_id):
+    action = request.GET.get('action')
+    investment_proposal = get_object_or_404(InvestmentProposal, id=investment_proposal_id)
+
+    if action == 'aceitar':
+        messages.add_message(request, constants.SUCCESS, 'Proposta aceita')
+        investment_proposal.status = 'PA'
+    elif action == 'recusar':
+        messages.add_message(request, constants.SUCCESS, 'Proposta recusada')
+        investment_proposal.status = 'PR'
+
+    investment_proposal.save()
+
+    return redirect(reverse('company_url', kwargs={'company_id': investment_proposal.company.id}))
